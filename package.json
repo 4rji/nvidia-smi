@@ -1,0 +1,68 @@
+{
+  "name": "nvidia-nm",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Aplicación para monitorear el estado de la GPU.",
+  "author": "Havito",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "electron:dev": "concurrently \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:preview": "npm run build && electron ."
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "^35.2.0",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
+    "vite": "^6.3.1",
+    "wait-on": "^8.0.3"
+  },
+  "main": "public/electron.cjs",
+  "build": {
+    "appId": "com.example.gpuapp",
+    "productName": "GPU Status App",
+    "files": [
+      "dist/**/*",
+      "public/electron.cjs"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "resources"
+    },
+    "icon": "build/icon.png",
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.utilities"
+    }
+  }
+}

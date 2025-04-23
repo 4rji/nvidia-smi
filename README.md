@@ -2,7 +2,7 @@
 
 A real-time monitoring application for NVIDIA GPUs that provides a beautiful and intuitive interface to track GPU usage, memory consumption, and power usage.
 
-![GPU Monitor Screenshot](https://github.com/user-attachments/assets/9d48518a-bdb3-44ff-a20c-e09c8aeae506)
+https://github.com/user-attachments/assets/9d48518a-bdb3-44ff-a20c-e09c8aeae506
 
 ## Features
 
@@ -86,7 +86,7 @@ By default, the agent runs on port 3001. You can modify this in the agent script
 3. Verify the port number (default: 3001)  
 4. Click “Connect”  
 
-![Connect Screenshot](https://github.com/user-attachments/assets/e1072eac-f573-4c83-a763-a42ca2656673)
+https://github.com/user-attachments/assets/e1072eac-f573-4c83-a763-a42ca2656673
 
 ### Monitoring Features
 

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "Aplicación para monitorear el estado de la GPU.",
+  "description": "Application for monitoring GPU status.",
   "author": "Havito",
   "scripts": {
     "dev": "vite",

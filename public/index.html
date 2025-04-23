@@ -138,7 +138,7 @@
   </style>
 </head>
 <body>
-  <div id="connection-status" style="text-align: center; margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">Conectando...</div>
+  <div id="connection-status" style="text-align: center; margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">Connecting...</div>
   <div id="dashboards"></div>
   <script>
     let isFetching = false;
@@ -148,8 +148,8 @@
       const connectionStatus = document.getElementById('connection-status');
       try {
         const res = await fetch('http://192.168.44.34:3001/status');
-        if (!res.ok) throw new Error('Error en la respuesta del servidor');
-        connectionStatus.textContent = 'Conectado';
+        if (!res.ok) throw new Error('Server response error');
+        connectionStatus.textContent = 'Connected';
         const data = await res.json();
         const container = document.getElementById('dashboards');
         container.innerHTML = data.map(gpu => {
@@ -186,7 +186,7 @@
         }).join('');
       } catch (e) {
         console.error(e);
-        connectionStatus.textContent = 'Sin conexión';
+        connectionStatus.textContent = 'No connection';
       } finally {
         isFetching = false;
       }

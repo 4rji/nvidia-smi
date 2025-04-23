@@ -122,9 +122,9 @@ export default function GPUStatus() {
           )}
           {!connected ? (
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" gutterBottom>Conectar a GPU Remota</Typography>
+              <Typography variant="h5" gutterBottom>Connect to Remote GPU</Typography>
               <TextField
-                label="IP del servidor"
+                label="Server IP"
                 value={ip}
                 onChange={(e) => setIp(e.target.value)}
                 fullWidth
@@ -139,7 +139,7 @@ export default function GPUStatus() {
                 }}
               />
               <TextField
-                label="Puerto"
+                label="Port"
                 value={port}
                 onChange={(e) => setPort(e.target.value)}
                 fullWidth
@@ -159,18 +159,18 @@ export default function GPUStatus() {
                 onClick={() => setConnected(true)}
                 sx={{ mt: 2 }}
               >
-                Conectar
+                Connect
               </Button>
             </Box>
           ) : (
             <>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                 <Typography variant="h5" sx={{ color: '#4A90E2' }}>
-                  {gpuData.name || "Conectando..."}
+                  {gpuData.name || "Connecting..."}
                 </Typography>
                 <FormControl sx={{ minWidth: 120 }}>
                   <InputLabel sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    Intervalo
+                    Interval
                   </InputLabel>
                   <Select
                     value={updateInterval}
@@ -188,11 +188,11 @@ export default function GPUStatus() {
                       }
                     }}
                   >
-                    <MenuItem value={1}>1 segundo</MenuItem>
-                    <MenuItem value={2}>2 segundos</MenuItem>
-                    <MenuItem value={4}>4 segundos</MenuItem>
-                    <MenuItem value={6}>6 segundos</MenuItem>
-                    <MenuItem value={10}>10 segundos</MenuItem>
+                    <MenuItem value={1}>1 second</MenuItem>
+                    <MenuItem value={2}>2 seconds</MenuItem>
+                    <MenuItem value={4}>4 seconds</MenuItem>
+                    <MenuItem value={6}>6 seconds</MenuItem>
+                    <MenuItem value={10}>10 seconds</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -228,7 +228,7 @@ export default function GPUStatus() {
                   fullWidth
                   onClick={() => setConnected(false)}
                 >
-                  Desconectar
+                  Disconnect
                 </Button>
                 <Button
                   variant="outlined"
@@ -246,7 +246,7 @@ export default function GPUStatus() {
                     }
                   }}
                 >
-                  Restaurar IP por defecto
+                  Reset Default IP
                 </Button>
               </Box>
             </>

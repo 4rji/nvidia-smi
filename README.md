@@ -87,7 +87,10 @@ By default, the agent runs on port 3001. You can modify this in the agent script
 3. Verify the port number (default: 3001)  
 4. Click “Connect”  
 
-https://github.com/user-attachments/assets/e1072eac-f573-4c83-a763-a42ca2656673
+<img width="744" alt="Image" src="https://github.com/user-attachments/assets/e1072eac-f573-4c83-a763-a42ca2656673" />
+
+
+
 
 ### Monitoring Features
 
@@ -119,7 +122,7 @@ The `agente.py` script runs on the machine with the NVIDIA GPU and provides the 
   }]
   ```
 
-![Agent Screenshot](https://github.com/user-attachments/assets/6e66daa5-f7cf-4d64-afeb-28e1b4b6c0f4)
+<img width="744" alt="Image" src="https://github.com/user-attachments/assets/6e66daa5-f7cf-4d64-afeb-28e1b4b6c0f4" />
 
 ### Agent Configuration
 

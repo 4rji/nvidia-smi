@@ -2,7 +2,8 @@
 
 A real-time monitoring application for NVIDIA GPUs that provides a beautiful and intuitive interface to track GPU usage, memory consumption, and power usage.
 
-https://github.com/user-attachments/assets/9d48518a-bdb3-44ff-a20c-e09c8aeae506
+<img width="744" alt="Image" src="https://github.com/user-attachments/assets/1ab75804-9c70-4647-83e6-f7683d011dd8" />
+
 
 ## Features
 

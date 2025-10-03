@@ -2,6 +2,8 @@
 
 A real-time monitoring application for NVIDIA GPUs that provides a beautiful and intuitive interface to track GPU usage, memory consumption, and power usage.
 
+🌐 **Live Demo**: [https://4rji.github.io/nvidia-smi/](https://4rji.github.io/nvidia-smi/)
+
 <img width="744" alt="Image" src="https://github.com/user-attachments/assets/1ab75804-9c70-4647-83e6-f7683d011dd8" />
 
 
@@ -40,20 +42,18 @@ A real-time monitoring application for NVIDIA GPUs that provides a beautiful and
 
 3. Run or build the application:
    ```bash
-    dev
-       vite
-     build
-       vite build
-     lint
-       eslint .
-     preview
-       vite preview
-     electron:dev
-       concurrently "cross-env BROWSER=none npm run dev" "wait-on http://localhost:5173 && cross-env NODE_ENV=development electron ."
-     electron:build
-       npm run build && electron-builder
-     electron:preview
-       npm run build && electron .
+   # Web development
+   npm run dev          # Start development server
+   npm run build        # Build for production
+   npm run preview      # Preview production build
+   
+   # Electron desktop app
+   npm run electron:dev    # Run Electron in development
+   npm run electron:build  # Build Electron app
+   npm run electron:preview # Preview Electron app
+   
+   # Deploy to GitHub Pages
+   npm run deploy       # Deploy web version to GitHub Pages
    ```
 
 ### Server Agent
@@ -133,6 +133,42 @@ The default configuration in `agente.py`:
 - Update interval: 1 second  
 
 To modify these settings, edit the corresponding values in `agente.py`.
+
+## GitHub Pages Deployment
+
+This project is configured to automatically deploy to GitHub Pages using GitHub Actions. Here's how to set it up:
+
+### Automatic Deployment (Recommended)
+
+1. **Enable GitHub Pages**:
+   - Go to your repository settings
+   - Navigate to "Pages" in the sidebar
+   - Under "Source", select "GitHub Actions"
+
+2. **Deploy automatically**:
+   - Every push to the `main` branch will trigger a deployment
+   - The workflow is already configured in `.github/workflows/deploy.yml`
+   - Your app will be available at `https://yourusername.github.io/nvidia-smi/`
+
+### Manual Deployment
+
+If you prefer to deploy manually:
+
+```bash
+# Install gh-pages if not already installed
+npm install --save-dev gh-pages
+
+# Deploy
+npm run deploy
+```
+
+### Custom Domain (Optional)
+
+To use a custom domain:
+
+1. Add a `CNAME` file to the `public` folder with your domain name
+2. Configure your DNS to point to GitHub Pages
+3. Update the `base` in `vite.config.js` to match your domain
 
 ## Development
 

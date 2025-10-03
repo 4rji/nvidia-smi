@@ -1,13 +1,198 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <title>GPU Status</title>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --accent: #4fc3f7;
+      --text-color: #e0e0e0;
+      --card-radius: 12px;
+      --transition: 0.3s;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color); 
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+      align-items: flex-start;
+      /* height: 100vh; */
+    }
+    .container {
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: var(--accent);
+    }
+    #loading {
+      border: 4px solid var(--card-bg);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+    #gpu-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .gpu-card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--card-radius);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      width: calc(50% - 20px);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .gpu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    }
+    .gpu-card h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+    .gpu-card p {
+      margin: 5px 0;
+      font-size: 1rem;
+    }
+    @media (max-width: 600px) {
+      .gpu-card {
+        width: 100%;
+      }
+    }
+    body {
+      background-color: #000;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+      align-items: flex-start;
+      /* height: 100vh; */
+      margin: 0;
+    }
+    .dashboard {
+      text-align: center;
+    }
+    .dashboard h2 {
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+    .circle-container {
+      margin-bottom: 20px;
+    }
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0%, rgba(255,255,255,0.1) 0%);
+      --accent: #4fc3f7;
+      --pct: 0;
+      background: conic-gradient(var(--accent) calc(var(--pct) * 1%), rgba(255,255,255,0.1) 0%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .center-text {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .center-label {
+      font-size: 1rem;
+      margin-top: 5px;
+      color: var(--text-color);
+    }
+    .stats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 400px;
+      margin: 0 auto;
+      gap: 10px;
+    }
+    .stats div {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="connection-status" style="text-align: center; margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">Connecting...</div>
+  <div id="dashboards"></div>
+  <script>
+    let isFetching = false;
+    async function fetchGPUStatus() {
+      if (isFetching) return;
+      isFetching = true;
+      const connectionStatus = document.getElementById('connection-status');
+      try {
+        const res = await fetch('http://192.168.44.34:3001/status');
+        if (!res.ok) throw new Error('Server response error');
+        connectionStatus.textContent = 'Connected';
+        const data = await res.json();
+        const container = document.getElementById('dashboards');
+        container.innerHTML = data.map(gpu => {
+          const utilVal = parseFloat(gpu.utilization);
+          const [usedMem, totalMem] = gpu.memory.split('/').map(s => parseFloat(s));
+          const memPct = totalMem ? (usedMem / totalMem * 100) : 0;
+          const [usedP, maxP] = gpu.power.split('/').map(s => parseFloat(s));
+          const pwrPct = maxP ? (usedP / maxP * 100) : 0;
+          return `
+          <div class="dashboard">
+            <h2>${gpu.name}</h2>
+            <div class="circle-container">
+              <div class="circle" style="--pct: ${utilVal};">
+                <div class="center-text">${gpu.utilization}</div>
+              </div>
+            </div>
+            <div class="circle-container">
+              <div class="circle" style="--pct: ${memPct};">
+                <div class="center-text">${Math.round(memPct)}%</div>
+              </div>
+              <div class="center-label">Memory</div>
+            </div>
+            <div class="circle-container">
+              <div class="circle" style="--pct: ${pwrPct};">
+                <div class="center-text">${Math.round(pwrPct)}%</div>
+              </div>
+              <div class="center-label">Power</div>
+            </div>
+            <div class="stats">
+              <div>Memory: ${gpu.memory}</div>
+              <div>Power: ${gpu.power}</div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (e) {
+        console.error(e);
+        connectionStatus.textContent = 'No connection';
+      } finally {
+        isFetching = false;
+      }
+    }
+    fetchGPUStatus();
+    setInterval(fetchGPUStatus, 1000);
+  </script>
+</body>
 </html>

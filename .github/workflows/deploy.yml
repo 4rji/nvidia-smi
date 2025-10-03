@@ -17,13 +17,16 @@ permissions:
 
 # Permite que solo un job se ejecute a la vez, aunque se disparen múltiples ejecuciones
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  # Job para construir la aplicación
-  build:
+  # Job único que construye y despliega
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,14 +51,6 @@ jobs:
         with:
           path: './dist'
 
-  # Job para hacer el deploy
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

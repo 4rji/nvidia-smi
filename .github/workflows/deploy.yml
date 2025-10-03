@@ -18,7 +18,7 @@ permissions:
 # Permite que solo un job se ejecute a la vez, aunque se disparen múltiples ejecuciones
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   # Job para construir la aplicación
@@ -44,7 +44,7 @@ jobs:
         uses: actions/configure-pages@v4
         
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './dist'
 

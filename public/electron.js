@@ -1,6 +1,8 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
+const isDev = process.env.NODE_ENV === 'development';
+
 let mainWindow;
 
 app.on('ready', () => {
@@ -8,13 +10,16 @@ app.on('ready', () => {
     width: 800,
     height: 600,
     webPreferences: {
-      // Preload script (if any) and disable timer throttling in background
       preload: path.join(__dirname, 'preload.js'),
       backgroundThrottling: false,
     },
   });
 
-  mainWindow.loadURL('http://localhost:3000'); // Cambia esto si usas un servidor diferente
+  if (isDev) {
+    mainWindow.loadURL('http://localhost:5173');
+  } else {
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null;

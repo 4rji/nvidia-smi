@@ -221,32 +221,14 @@ export default function GPUStatus() {
                   label="Power"
                 />
               </Box>
-              <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+              <Box sx={{ mt: 3 }}>
                 <Button
                   variant="contained"
                   color="secondary"
                   fullWidth
                   onClick={() => setConnected(false)}
                 >
-                  Disconnect
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  onClick={() => {
-                    setIp("192.168.44.34");
-                    setPort("3001");
-                  }}
-                  sx={{
-                    borderColor: 'rgba(255,255,255,0.3)',
-                    color: 'white',
-                    '&:hover': {
-                      borderColor: 'rgba(255,255,255,0.5)'
-                    }
-                  }}
-                >
-                  Reset Default IP
+                  ← Back
                 </Button>
               </Box>
             </>
